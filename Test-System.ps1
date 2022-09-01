@@ -1,7 +1,7 @@
 ﻿Function Test-System
 {
 [CmdletBinding()]
-$IpAddress = Get-NetIPAddress | Where -Property 'InterfaceAlias' -EQ 'Wi-Fi'
+$IpAddress = Get-NetIPAddress | Where-Object -Property 'InterfaceAlias' -EQ 'Wi-Fi'
 $Ping = Test-NetConnection Google.com
 $Properties = @{
                 'IPv4_Address' = $IpAddress.IPv4Address;
