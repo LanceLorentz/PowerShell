@@ -9,48 +9,56 @@
 Function New-User
 {
 Param(
-        [Parameter(Mandatory=$true)][String]$FirstName,
-        [Parameter(Mandatory=$True)][String]$LastName, 
-        [Parameter(Mandatory=$True)][String]$Unit
-        )
-      
-        
-New-ADUser -Path "OU=$Unit,DC=Adatum,DC=com" `
--Name "$FirstName $LastName" `
--GivenName $FirstName `
--Surname $LastName `
--DisplayName "$FirstName $LastName" `
--SamAccountName "$FirstName $LastName" `
--UserPrincipalName "$FirstName$LastName@adatum.com" `
--AccountPassword (ConvertTo-SecureString "Pa55w.rd" -AsPlainText -Force) `
--ChangePasswordAtLogon $True `
--Enabled $True
+      [Parameter(Mandatory=$True)][String]$FirstName,
+      [Parameter(Mandatory=$True)][String]$LastName, 
+      [Parameter(Mandatory=$False)][String]$Unit
+      )
+      $SamAccountName = "$FirstName $LastName"
+                                      
+    If (Get-ADUser -filter {SamAccountName -eq $SamAccountName})
+    {  
+    Write-Warning "A user with the name $FirstName $LastName already exists in Active Directory."
+    }
+    
+    Else
+    {                                             
+    New-ADUser -Path "OU=$Unit,DC=Adatum,DC=com" `
+    -Name "$FirstName $LastName" `
+    -GivenName $FirstName `
+    -Surname $LastName `
+    -DisplayName "$FirstName $LastName" `
+    -SamAccountName "$FirstName $LastName" `
+    -UserPrincipalName "$FirstName$LastName@adatum.com" `
+    -AccountPassword (ConvertTo-SecureString "Pa55w.rd" -AsPlainText -Force) `
+    -ChangePasswordAtLogon $True `
+    -Enabled $True
+  
+    Add-ADGroupMember -Members "$FirstName $LastName" -Identity $Unit
+    }
 
-Add-ADGroupMember -Members "$FirstName $LastName" -Identity $Unit
+ <#
+ .SYNOPSIS
+ Creates a new AD user in the specified organizational unit.
 
-<#
-.SYNOPSIS
-Creates a new AD user in the specified organizational unit.
+ .DESCRIPTION
+ Creates a new Active Directory user in the specified organizational unit, and adds that user to the associated group for that OU.
+ Creates a temporary account password of "Pa55w.rd" that must be changed upon initial sign in.
+ Created in a test environment. If using in a production environment, enusre you edit the -Path value to meet your environment's needs.
 
-.DESCRIPTION
-Creates a new Active Directory user in the specified organizational unit, and adds that user to the associated group for that OU.
-Creates a temporary account password of "Pa55w.rd" that must be changed upon initial sign in.
-Created in a test environment. If using in a production environment, enusre you edit the -Path value to meet your environment's needs.
+ .PARAMETER FirstName
+ Specifies the user's first name
 
-.PARAMETER FirstName
-Specifies the user's first name
+ .PARAMETER LastName
+ Specifies the user's last name
 
-.PARAMETER LastName
-Specifies the user's last name
+ .PARAMETER Unit
+ Specifies the organizational unit and group that the user will be placed in
 
-.PARAMETER Unit
-Specifies the organizational unit and group that the user will be placed in
+ .EXAMPLE
+ New-User -FirstName John -LastName Doe -Unit Sales
 
-.EXAMPLE
-New-User -FirstName John -LastName Doe -Unit Sales
-
-.NOTES
-#>
+ .NOTES
+ #>
 }
 
 
