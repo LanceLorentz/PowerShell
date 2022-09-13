@@ -1,9 +1,9 @@
 # READ ME
 # THE FOLLOWING SCRIPTS WERE DESIGNED IN A TESTING ENIVRONMENT IN WHICH ACTIVE DIRECTORY WAS ALREADY CONFIGURED WITH THE PROPER DOMAINS, ORGANIZATION UNITS, SECURITY GROUPS ETC.
-# TO USE THESE FUNCTIONS IN A PRDUCTION ENVIRONMENT, ENSURE THAT YOU MAKE THE NECESSARY EDITS TO THE SCRIPTS TO ALLOW THEM TO RUN IN YOUR ENIVRONMENT
+# TO USE THESE FUNCTIONS IN A PRODUCTION ENVIRONMENT, ENSURE THAT YOU MAKE THE NECESSARY EDITS TO THE SCRIPTS TO ALLOW THEM TO RUN IN YOUR ENIVRONMENT
 
 
-## Creates a new AD User in the specified Organizational Unit, and adds that user to the associated group.
+# Creates a new AD User in the specified Organizational Unit, and adds that user to the associated group.
 # Creates a temporary account password of "Pa55w.rd" that must be changed upon initial sign in.
 # This function was created in a test environment. To use in a production environment, edit the -Path value to meet your needs.
 Function New-User
@@ -57,7 +57,7 @@ New-User -FirstName John -LastName Doe -Unit Sales
 
 # The following function is used to create a new Organizational Unit and Secrity Group in Active Driectory.
 # The Security Group is created with the scope: Global and Category: Security. The group is placed within the created OU.
-# PRIOR TO USE IN A PRODUCTION ENVIRONMENT: Change -Path to the appropriate path for your ActiveDirectory environment.
+# PRIOR TO USE IN A PRODUCTION ENVIRONMENT: Change -Path to the appropriate path for your Active Directory environment.
 # If desired, you can change the group scope and category to better suit your needs.
 Function New-Unit
 {
