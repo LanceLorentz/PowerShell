@@ -14,7 +14,7 @@ Param(
       [Parameter(Mandatory=$True)][String]$LastName, 
       [Parameter(Mandatory=$False)][String]$Department
       )
-      # This assumes a previously established naming convention for the SamAccountName, edit according to your company
+      # This assumes a previously established naming convention for the SamAccountName, edit according to your naming conventions
       $SamAccountName = "$FirstName $LastName"
                                       
     If (Get-ADUser -filter {SamAccountName -eq $SamAccountName})
