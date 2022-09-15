@@ -153,14 +153,12 @@ Function New-Department
           )
 New-ADOrganizationalUnit `
 -Name $Name `
-# Edit path to suit your production environment
 -Path "DC=Adatum,DC=com"
 
 New-ADGroup `
 -Name $Name  `
 -GroupScope Global `
 -GroupCategory Security `
-# Edit Path to suit your prduction environment
 -Path "OU=$Name,DC=Adatum,DC=com"
 
 Write-Host "The organizational unit $Name has been created."
